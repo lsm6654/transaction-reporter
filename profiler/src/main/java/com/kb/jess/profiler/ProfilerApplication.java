@@ -47,12 +47,10 @@ public class ProfilerApplication {
         port(8080);
         get("/customers/:customerNumber", (request, response) -> {
             Customer customer = customerService.findCustomer(Long.parseLong(request.params(":customerNumber"))).orElseThrow(() -> new TransactionReporterException("Not found customer"));
-            System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@");
             return objectMapper.writeValueAsString(customer);
         });
         get("/customers/:customerNumber/account", (request, response) -> {
             Account account = accountService.findAccountByCustomerNumber(Long.parseLong(request.params(":customerNumber"))).orElseThrow(() -> new TransactionReporterException("Not found Account"));
-            System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@");
             return objectMapper.writeValueAsString(account);
         });
 

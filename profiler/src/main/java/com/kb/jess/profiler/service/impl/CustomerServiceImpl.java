@@ -5,7 +5,6 @@ import com.kb.jess.core.model.*;
 import com.kb.jess.profiler.repository.CustomerRepository;
 import com.kb.jess.profiler.service.CustomerService;
 
-import java.util.ArrayList;
 import java.util.Optional;
 
 public class CustomerServiceImpl implements CustomerService {

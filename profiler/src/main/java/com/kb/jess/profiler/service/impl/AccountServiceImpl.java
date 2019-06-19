@@ -52,7 +52,6 @@ public class AccountServiceImpl implements AccountService {
         final long balance = account.getBalance() + log.getAmount();
         final AccountTransactionAggregation aggregation = account.getAggregation().newAggregation(log);
 
-        //TODO
         return new Account(log.getAccountNumber(), balance, aggregation);
     }
 
