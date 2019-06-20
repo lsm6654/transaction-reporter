@@ -1,7 +1,5 @@
 package com.kb.jess.core.model;
 
-import com.sun.istack.internal.NotNull;
-
 public class Account {
     private final String accountNumber;
     private final Long balance;
@@ -21,7 +19,6 @@ public class Account {
         return accountNumber;
     }
 
-    @NotNull
     public AccountTransactionAggregation getAggregation() {
         if (aggregation == null) {
             return AccountTransactionAggregation.empty();

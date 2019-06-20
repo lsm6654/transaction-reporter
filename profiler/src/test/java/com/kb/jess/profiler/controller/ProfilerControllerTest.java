@@ -30,7 +30,7 @@ public class ProfilerControllerTest extends TestBase {
 
         context.addBean(CustomerServiceImpl.class, customerService);
         context.addBean(AccountServiceImpl.class, accountService);
-        context.addBean(ObjectMapper.class, context.objectMapper());
+        context.addBean(ObjectMapper.class, objectMapper());
 
         Mockito.when(customerService.findCustomer(Mockito.anyLong())).thenAnswer( i -> {
             Long argument = (Long) i.getArguments()[0];

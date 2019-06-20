@@ -25,15 +25,14 @@ public class ProfilerApplication {
     private static final ProfilerContext profilerContext = new ProfilerContext();
 
     public static void main(String[] args) {
-        registerShutdownHook();
         profilerContext.initialize();
+        registerShutdownHook();
         consumeKafka();
         runApiServer();
     }
 
     public static void consumeKafka() {
         executorService.execute(() -> {
-            //TODO something
             KafkaTransactionConsumer consumer = ProfilerContext.getBean(KafkaTransactionConsumer.class);
             consumer.subscribe();
         });

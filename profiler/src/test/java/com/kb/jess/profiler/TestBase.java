@@ -1,5 +1,7 @@
 package com.kb.jess.profiler;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 import com.kb.jess.core.model.Account;
 import com.kb.jess.core.model.AccountTransactionAggregation;
 import com.kb.jess.core.model.Customer;
@@ -25,5 +27,12 @@ public class TestBase {
 
     protected static Account getDefaultAccount() {
         return new Account("1234-1234-1234-1234", initialAmount, AccountTransactionAggregation.empty());
+    }
+
+    protected static ObjectMapper objectMapper() {
+        final ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.registerModule(new Jdk8Module());
+
+        return objectMapper;
     }
 }

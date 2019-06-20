@@ -33,31 +33,39 @@ public class KafkaTransactionConsumer {
 
         try {
             while(true) {
-                final ConsumerRecords<Long, TransactionBase> records = kafkaConsumer.poll(Duration.ofMillis(1000));
-                records.forEach(r -> {
-                    switch (r.value().getTransactionType()) {
-                        case SESSION:
-                            customerSaveService.saveSessionLog((SessionStartLog) r.value());
-                            break;
-                        case REGISTER:
-                            customerSaveService.saveRegisterLog((RegisterLog) r.value());
-                            break;
-                        case CREATE_ACCOUNT:
-                            customerSaveService.saveCreateAccountLog((CreateAccountLog) r.value());
-                            break;
-                        case DEPOSIT:
-                        case WITHDRAWL:
-                            accountSaveService.saveTransactionLog((TransactionLog) r.value());
-                            break;
-                        case TRANSFER:
-                            accountSaveService.saveTransferLog((TransferTransactionLog) r.value());
-                            break;
-                    }
-                });
+                consume();
             }
         } catch (WakeupException e) {
             log.info("occurred kafka wakeup signal");
             kafkaConsumer.close();
+        }
+    }
+
+    private void consume() {
+        try {
+            final ConsumerRecords<Long, TransactionBase> records = kafkaConsumer.poll(Duration.ofMillis(1000));
+            records.forEach(r -> {
+                switch (r.value().getTransactionType()) {
+                    case SESSION:
+                        customerSaveService.saveSessionLog((SessionStartLog) r.value());
+                        break;
+                    case REGISTER:
+                        customerSaveService.saveRegisterLog((RegisterLog) r.value());
+                        break;
+                    case CREATE_ACCOUNT:
+                        customerSaveService.saveCreateAccountLog((CreateAccountLog) r.value());
+                        break;
+                    case DEPOSIT:
+                    case WITHDRAWL:
+                        accountSaveService.saveTransactionLog((TransactionLog) r.value());
+                        break;
+                    case TRANSFER:
+                        accountSaveService.saveTransferLog((TransferTransactionLog) r.value());
+                        break;
+                }
+            });
+        } catch (Exception e) {
+            log.error("occurred error when kafka consume : {}", e.getMessage(), e);
         }
     }
 

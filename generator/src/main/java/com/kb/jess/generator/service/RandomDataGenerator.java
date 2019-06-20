@@ -13,13 +13,13 @@ public class RandomDataGenerator {
     private final long minEpochTime = LocalDate.of(1920, 1, 1).toEpochDay();
     private final long maxEpochTime = LocalDate.of(1999, 1, 1).toEpochDay();
 
-    public List<TransactionBase> generate(int concurrentUserCount) {
+    public List<TransactionBase> generate(final int concurrentUserCount) {
         final Set<Integer> customerNumbers = new HashSet<>();
         while(customerNumbers.size() < concurrentUserCount) {
             customerNumbers.add(ThreadLocalRandom.current().nextInt(Constants.MAX_CUSTOMER_COUNT));
         }
 
-        List<TransactionBase> transactions = new ArrayList<>();
+        final List<TransactionBase> transactions = new ArrayList<>();
         for (Integer customerNumber: customerNumbers) {
             final List<TransactionBase> session = accounts[customerNumber] == null ? generateRegisterData(customerNumber) : generateTransactionData(customerNumber);
             transactions.addAll(session);
@@ -28,7 +28,7 @@ public class RandomDataGenerator {
         return transactions;
     }
 
-    private List<TransactionBase> generateRegisterData(Integer customerNumber) {
+    private List<TransactionBase> generateRegisterData(final Integer customerNumber) {
         final String randomDate = LocalDateTimeUtils.getRandomDateString(minEpochTime, maxEpochTime);
         final String accountNumber = UUID.randomUUID().toString();
         accounts[customerNumber] = new Account(accountNumber);

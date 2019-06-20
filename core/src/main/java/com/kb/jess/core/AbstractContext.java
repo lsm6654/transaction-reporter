@@ -10,19 +10,19 @@ public abstract class AbstractContext {
     private static final Map<Type, Object> beans = new ConcurrentHashMap<>(64);
 
     public static void addBean(final Class clazz, final Object bean) throws BeanDefinitionException {
-        Object o = beans.get(clazz);
+        final Object o = beans.get(clazz);
         if (o != null) {
             //not support duplicate candidate beans.
-            throw new BeanDefinitionException("duplicate bean");
+            throw new BeanDefinitionException(clazz.getName() + "duplicate bean");
         }
 
         beans.put(clazz, bean);
     }
 
     public static <T> T getBean(final Class<T> clazz) throws BeanDefinitionException {
-        T t = (T) beans.get(clazz);
+        final T t = (T) beans.get(clazz);
         if (t == null) {
-            throw new BeanDefinitionException("candidate bean does not exists.");
+            throw new BeanDefinitionException(clazz.getName() + "candidate bean does not exists.");
         }
 
         return t;

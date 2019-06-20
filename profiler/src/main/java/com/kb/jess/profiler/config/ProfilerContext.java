@@ -15,23 +15,23 @@ public class ProfilerContext extends AbstractContext {
     @Override
     public void initialize() {
         //bean initialize
-        AccountInMemoryRepository accountRepository = new AccountInMemoryRepository();
-        CustomerInMemoryRepository customerRepository = new CustomerInMemoryRepository();
+        final AccountInMemoryRepository accountRepository = new AccountInMemoryRepository();
+        final CustomerInMemoryRepository customerRepository = new CustomerInMemoryRepository();
         addBean(AccountInMemoryRepository.class, accountRepository);
         addBean(CustomerInMemoryRepository.class, customerRepository);
 
-        AccountServiceImpl accountService = new AccountServiceImpl(accountRepository, customerRepository);
-        CustomerServiceImpl customerService = new CustomerServiceImpl(customerRepository);
+        final AccountServiceImpl accountService = new AccountServiceImpl(accountRepository, customerRepository);
+        final CustomerServiceImpl customerService = new CustomerServiceImpl(customerRepository);
         addBean(AccountServiceImpl.class, accountService);
         addBean(CustomerServiceImpl.class, customerService);
 
-        KafkaTransactionConsumer transactionConsumer = KafkaBeanFactory.createTransactionConsumer(accountService, customerService);
+        final KafkaTransactionConsumer transactionConsumer = KafkaBeanFactory.createTransactionConsumer(accountService, customerService);
         addBean(KafkaTransactionConsumer.class, transactionConsumer);
 
         addBean(ObjectMapper.class, objectMapper());
     }
 
-    public ObjectMapper objectMapper() {
+    private ObjectMapper objectMapper() {
         final ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.registerModule(new Jdk8Module());
 

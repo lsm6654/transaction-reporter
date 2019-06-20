@@ -9,22 +9,22 @@ import java.util.Optional;
 public class CustomerInMemoryRepository extends AbstractInMemoryRepository implements CustomerRepository {
 
     @Override
-    public Optional<Customer> findCustomerByCustomerNumber(Long customerNumber) {
+    public Optional<Customer> findCustomerByCustomerNumber(final Long customerNumber) {
         return findCustomer(customerNumber);
     }
 
     @Override
-    public Customer saveCustomer(Long customerNumber, Customer customer) {
+    public Customer saveCustomer(final Long customerNumber, final Customer customer) {
         return super.saveCustomer(customerNumber, customer);
     }
 
     @Override
-    public Long findCustomerNumberByAccountNumber(String accountNumber) {
+    public Long findCustomerNumberByAccountNumber(final String accountNumber) {
         return findCustomerNumber(accountNumber);
     }
 
     @Override
-    public Long saveCustomerNumber(Long customerNumber, String accountNumber) {
+    public Long saveCustomerNumber(final Long customerNumber, final String accountNumber) {
         return saveAccountNumber(accountNumber, customerNumber);
     }
 }

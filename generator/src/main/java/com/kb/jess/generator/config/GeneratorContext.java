@@ -12,16 +12,16 @@ public class GeneratorContext extends AbstractContext {
     @Override
     public void initialize() {
         //bean initialize
-        RandomDataGenerator randomDataGenerator = new RandomDataGenerator();
+        final RandomDataGenerator randomDataGenerator = new RandomDataGenerator();
         addBean(RandomDataGenerator.class, randomDataGenerator);
 
-        KafkaTransactionProducer kafkaTransactionProducer = KafkaBeanFactory.createTransactionProducer();
+        final KafkaTransactionProducer kafkaTransactionProducer = KafkaBeanFactory.createTransactionProducer();
         addBean(KafkaTransactionProducer.class, kafkaTransactionProducer);
 
-        LogStoreKafkaService logStoreKafkaService = new LogStoreKafkaService();
+        final LogStoreKafkaService logStoreKafkaService = new LogStoreKafkaService();
         addBean(LogStoreKafkaService.class, logStoreKafkaService);
 
-        GeneratorService generatorService = new GeneratorService();
+        final GeneratorService generatorService = new GeneratorService();
         addBean(GeneratorService.class, generatorService);
     }
 }

@@ -6,6 +6,7 @@ import com.kb.jess.core.support.util.StringUtils;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Properties;
 
 public class PropertiesHelper {
@@ -23,9 +24,9 @@ public class PropertiesHelper {
         initialize(Constants.DEFAULT_PROPERTIES_FILE_NAME);
     }
 
-    public static void initialize(final String file) throws IOException {
-        final String propertyPath = PropertiesHelper.class.getClassLoader().getResource(file).getPath();
-        appProps.load(new FileInputStream(propertyPath));
+    public static void initialize(final String fileName) throws IOException {
+        InputStream resourceAsStream = PropertiesHelper.class.getResourceAsStream("/" + fileName);
+        appProps.load(resourceAsStream);
     }
 
     public static String getProperty(final String key) {

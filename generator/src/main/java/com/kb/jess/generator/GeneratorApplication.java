@@ -11,7 +11,7 @@ public class GeneratorApplication {
 
     public static void main(String[] args) throws InterruptedException {
         context.initialize();
-        GeneratorService generatorService = GeneratorContext.getBean(GeneratorService.class);
+        final GeneratorService generatorService = GeneratorContext.getBean(GeneratorService.class);
         registerShutdownHook(generatorService);
 
         while(true) {
@@ -20,7 +20,7 @@ public class GeneratorApplication {
         }
     }
 
-    private static void registerShutdownHook(GeneratorService generatorService) {
+    private static void registerShutdownHook(final GeneratorService generatorService) {
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
             log.info("SIGTERM hook");
             generatorService.close();

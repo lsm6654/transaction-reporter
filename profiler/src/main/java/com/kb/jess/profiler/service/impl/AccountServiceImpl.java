@@ -13,13 +13,14 @@ public class AccountServiceImpl implements AccountService {
     private final AccountRepository accountRepository;
     private final CustomerRepository customerRepository;
 
-    public AccountServiceImpl(AccountRepository accountRepository, CustomerRepository customerRepository) {
+    public AccountServiceImpl(final AccountRepository accountRepository,
+                              final CustomerRepository customerRepository) {
         this.accountRepository = accountRepository;
         this.customerRepository = customerRepository;
     }
 
     @Override
-    public Optional<Account> saveTransactionLog(TransactionLog transactionLog) {
+    public Optional<Account> saveTransactionLog(final TransactionLog transactionLog) {
         final Customer customer = findCustomer(transactionLog.getCustomerNumber());
         final Account newAccount = makeAccount(transactionLog, customer);
 
@@ -28,7 +29,7 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public Optional<Account> saveTransferLog(TransferTransactionLog transferTransactionLog) {
+    public Optional<Account> saveTransferLog(final TransferTransactionLog transferTransactionLog) {
         final Customer customer = findCustomer(transferTransactionLog.getCustomerNumber());
         final Account newAccount = makeAccount(transferTransactionLog, customer);
 
@@ -43,11 +44,11 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public Optional<Account> findAccountByCustomerNumber(Long customerNumber) {
+    public Optional<Account> findAccountByCustomerNumber(final Long customerNumber) {
         return accountRepository.findAccountByCustomerNumber(customerNumber);
     }
 
-    private Account makeAccount(TransactionLog log, Customer customer) {
+    private Account makeAccount(final TransactionLog log, final Customer customer) {
         final Account account = customer.getAccount();
         final long balance = account.getBalance() + log.getAmount();
         final AccountTransactionAggregation aggregation = account.getAggregation().newAggregation(log);
@@ -66,7 +67,7 @@ public class AccountServiceImpl implements AccountService {
         customerRepository.saveCustomer(customerNumber, newCustomer);
     }
 
-    private Customer findCustomer(Long customerNumber) {
+    private Customer findCustomer(final Long customerNumber) {
         return customerRepository.findCustomerByCustomerNumber(customerNumber).orElseThrow(() -> new TransactionReporterException("Not found customer"));
     }
 }

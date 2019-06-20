@@ -41,9 +41,6 @@ public class KafkaTransactionProducer {
 
     private void sendMessages(final String topic, final List<TransactionBase> messages) {
         for (final TransactionBase message: messages) {
-//            List<Header> headers = new ArrayList<>();
-//            headers.add(new RecordHeader("message-type", message.getTransactionType().toString().getBytes()));
-
             final ProducerRecord<Long, TransactionBase> record = new ProducerRecord<>(topic, message.getCustomerNumber(), message);
             record.headers().add(new RecordHeader("message-type", message.getTransactionType().toString().getBytes()));
 

@@ -15,7 +15,7 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public Optional<Customer> saveSessionLog(SessionStartLog sessionStartLog) {
+    public Optional<Customer> saveSessionLog(final SessionStartLog sessionStartLog) {
         if (sessionStartLog.getCustomerNumber() < 0) {
             return Optional.empty();
         }
@@ -26,14 +26,14 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public Optional<Customer> saveRegisterLog(RegisterLog registerLog) {
+    public Optional<Customer> saveRegisterLog(final RegisterLog registerLog) {
         final Customer customer = new Customer(null, registerLog.getCustomerName(), registerLog.getBirthday(), registerLog.getTransactionTime(), 1);
         customerRepository.saveCustomer(registerLog.getCustomerNumber(), customer);
         return Optional.of(customer);
     }
 
     @Override
-    public Optional<Customer> saveCreateAccountLog(CreateAccountLog createAccountLog) {
+    public Optional<Customer> saveCreateAccountLog(final CreateAccountLog createAccountLog) {
         final Customer customer = getCustomer(createAccountLog.getCustomerNumber());
         final Account account = new Account(createAccountLog.getAccountNumber(), 0l, AccountTransactionAggregation.empty());
         final Customer newCustomer = customer.copy(account);
@@ -45,11 +45,11 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public Optional<Customer> findCustomer(Long customerNumber) {
+    public Optional<Customer> findCustomer(final Long customerNumber) {
         return customerRepository.findCustomerByCustomerNumber(customerNumber);
     }
 
-    private Customer getCustomer(Long customerNumber) {
+    private Customer getCustomer(final Long customerNumber) {
         return findCustomer(customerNumber).orElseThrow(() -> new TransactionReporterException("Not found customer"));
     }
 }
